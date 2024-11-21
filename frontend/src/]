@@ -17,10 +17,9 @@ const App = () => {
       const response = await axios.post('http://localhost:5000/api/message', {
         message: input,
       });
-      
-      console.log('Server Response:', response.data);
+
       // サーバーからの応答をメッセージに追加
-      const botMessage = { sender: 'bot', text: response.data.reply };
+      const botMessage = { sender: 'bot', text: response.data.input };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
       setInput('');
     } catch (error) {
