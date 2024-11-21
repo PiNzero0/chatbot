@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-const App = () => {
+function App() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
+  const chatContainerRef = useRef(null);  // 追加: chat-container の参照を保持
 
+  // メッセージ送信の処理
   const handleSend = async () => {
     if (!input) return;
 
     // フロントエンドにユーザーメッセージを追加
     const userMessage = { sender: 'user', text: input };
-    setMessages([...messages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
       // バックエンドにリクエストを送信
       const response = await axios.post('http://localhost:5000/api/message', {
         message: input,
       });
-      
+
       console.log('Server Response:', response.data);
       // サーバーからの応答をメッセージに追加
       const botMessage = { sender: 'bot', text: response.data.reply };
@@ -28,10 +30,17 @@ const App = () => {
     }
   };
 
+  // メッセージが更新されるたびにスクロールを最下部にする
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]); // messagesが変更されるたびに実行
+
   return (
     <div style={styles.container}>
       <h1>ChatBot</h1>
-      <div style={styles.chatContainer}>
+      <div style={styles.chatContainer} ref={chatContainerRef}> {/* refを設定 */}
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -59,7 +68,7 @@ const App = () => {
       </div>
     </div>
   );
-};
+}
 
 // スタイル
 const styles = {
