@@ -14,7 +14,7 @@ export function useChat() {
 
     try {
       // バックエンドにリクエストを送信
-      const response = await axios.post('http://localhost:5000/api/message', {
+      const response = await axios.post('https//api.pinzero.net/api/message', {
         message: input,
       });
 

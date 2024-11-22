@@ -10,11 +10,11 @@ function ChatContainer({ messages }) {
   }, [messages]);
 
   return (
-    <div className="chat-container" ref={chatContainerRef}> {/* classNameを使用 */}
+    <div className="chat-container" ref={chatContainerRef}> 
       {messages.map((msg, index) => (
         <div
           key={index}
-          className="message" // classNameを使用
+          className="message"
           style={{
             alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
             backgroundColor: msg.sender === 'user' ? '#DCF8C6' : '#ECECEC',
