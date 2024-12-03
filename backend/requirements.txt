@@ -1,6 +1,12 @@
 flask
 flask-cors
-requests
-python_dotenv
-google-generativeai
 gunicorn
+python-dotenv
+langgraph
+langchain
+langchain-google-genai
+langchain-community
+langchain-core
+langchain-chroma
+tavily-python
+chromadb
